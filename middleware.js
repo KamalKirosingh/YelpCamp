@@ -22,6 +22,7 @@ module.exports.isLoggedIn = (req, res, next) => {
 // VALIDATE MIDDLEWARE - If the campground req.body is valid 
 // *********************************************************
 module.exports.validateCampground = (req, res, next) => {
+    //.validate uses the joi method
     const { error } = campgroundSchema.validate(req.body);
     if (error) {
         const msg = error.details.map(el => el.message).join(',')
