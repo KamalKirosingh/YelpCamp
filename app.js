@@ -21,9 +21,9 @@ const LocalStrategy = require('passport-local')
 const User = require('./models/user')
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
-const dbUrl = 'mongodb://localhost:27017/yelp-camp' || process.env.DB_URL
-const MongoDBStore = require('connect-mongo')(session)
-
+const dbUrl = process.env.DB_URL 
+const MongoDBStore = require("connect-mongo")(session);
+//|| 'mongodb://localhost:27017/yelp-camp'
 // ***************************
 // Render forms in directories 
 // ***************************
@@ -62,17 +62,18 @@ db.once("open", () => {
 // *********************************** 
 //       SESSION/COOKIE SETUP  
 // ***********************************
-const secret = process.env.SECRET
+const secret = process.env.SECRET || 'thisshouldbeabettersecret!'
 
 const store = new MongoDBStore({
     url: dbUrl,
     secret,
-    touchAfter: 24 * 3600
+    touchAfter: 24 * 60 * 60
 })
 store.on("error", function(e) {
     console.log("SESSION STORE ERROR", e)
 })
 const sessionConfig = {
+    store,
     name: 'session',
     secret,
     resave: false,
@@ -179,7 +180,7 @@ app.use((err, req, res, next) => {
     if (!err.message) err.message = 'Oh No, Something Went Wrong!'
     res.status(statusCode).render('error', { err })
 })
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Serving on port ${port}`)
 })
