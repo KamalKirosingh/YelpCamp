@@ -14,3 +14,6 @@ User profiles include more information on the user (full name, email, phone, joi
 Search campground by name or location
 
 Sort campgrounds by highest rating, most reviewed, lowest price, or highest price
+
+Deployed website:
+https://blooming-thicket-66606.herokuapp.com/
